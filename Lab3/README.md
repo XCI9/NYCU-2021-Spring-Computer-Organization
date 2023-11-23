@@ -37,16 +37,41 @@ design (40%).**<br/>
 (For those who can't read testcase txt files after adding the testcase into simulation sources, please change the relative path in instr_memory file to absolute path.) <br/>
 **Your CPU design has to support the instruction set from Lab 2 + the following instructions:**
     1. lw (load word): Reg[Rt] ← Mem[Rs+Imm]
+      ```
+      ┌────────────┬─────────┬─────────┬────────────────────────────────┐
+      │ 6’b100011  │Rs[25:21]│Rt[20:16]│          Imm[15:0]             │
+      └────────────┴─────────┴─────────┴────────────────────────────────┘
+      ```
     2. sw (store word):  Mem[Rs+Imm] ← Reg[Rt]
+      ```
+      ┌────────────┬─────────┬─────────┬────────────────────────────────┐
+      │ 6’b101011  │Rs[25:21]│Rt[20:16]│          Imm[15:0]             │
+      └────────────┴─────────┴─────────┴────────────────────────────────┘
+      ```
     3. jump: PC ← { PC[31:28], address<<2 }
+      ```
+      ┌────────────┬────────────────────────────────────────────────────┐
+      │ 6’b000010  │                    Imm[15:0]                       │
+      └────────────┴────────────────────────────────────────────────────┘
+      ```
 9. **Advanced Instructions: the following instructions have to be executed correctly in your CPU design, and we may use some hidden cases to further evaluate your design (40%).**
     1. jal (jump and link)<br/>
        In MIPS, the 31th register saves return address for function calls.<br/>
        Reg[31] ← PC+4<br/>
        PC ← { PC[31:28], address<<2 }
+       ```
+       ┌────────────┬────────────────────────────────────────────────────┐
+       │ 6’b000010  │                    Imm[15:0]                       │
+       └────────────┴────────────────────────────────────────────────────┘
+       ```
     3. jr (jump register)<br/>
        In MIPS, you can use `jr r31` to jump to the return address linked from `jal` instruction.<br/>
        PC ← Reg[Rs]
+       ```
+       ┌────────────┬─────────┬─────────┬─────────┬─────────┬────────────┐
+       │ 6’b000000  │Rs[25:21]│    0    │    0    │    0    │ 6’b001000  │
+       └────────────┴─────────┴─────────┴─────────┴─────────┴────────────┘
+       ```
 10. Test program
     The second testbench CO_P3_test_data2.txt is a Fibonacci function. r2 represent the final answer. Please refer to **test2.txt**.
 
